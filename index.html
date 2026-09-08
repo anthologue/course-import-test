@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inheritance in Java: A Real-Life Scenario</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg: oklch(97% 0.02 90);
+    --surface: oklch(99% 0.01 90);
+    --surface-2: oklch(95% 0.02 200);
+    --text: oklch(28% 0.03 280);
+    --text-soft: oklch(46% 0.03 280);
+    --accent: oklch(75% 0.13 50);
+    --accent-2: oklch(75% 0.13 200);
+    --accent-hover: oklch(65% 0.13 50);
+    --border: oklch(91% 0.02 90);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Quicksand', system-ui, sans-serif;
+    display: flex;
+    min-height: 100vh;
+  }
+  a { color: var(--accent-hover); }
+  a:hover { color: var(--accent); }
+
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 28px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .brand {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--text);
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .brand-sub {
+    font-size: 13px;
+    color: var(--text-soft);
+    margin: 0 0 24px;
+  }
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .nav-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-soft);
+    cursor: pointer;
+  }
+  .nav-btn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+  .nav-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 48px 32px 80px;
+  }
+  .content-inner {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .lesson { display: none; }
+  .lesson.active { display: block; }
+
+  .lesson-kicker {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-hover);
+    margin-bottom: 8px;
+  }
+  .lesson h1 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 1.15;
+    margin: 0 0 24px;
+    color: var(--text);
+  }
+  .lesson p {
+    font-size: 16px;
+    line-height: 1.75;
+    margin: 0 0 18px;
+  }
+  .lesson code {
+    background: var(--surface-2);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.9em;
+  }
+  .lesson strong { color: var(--text); }
+
+  .box {
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-top: 28px;
+  }
+  .takeaways {
+    background: var(--surface);
+    border: 2px solid var(--accent);
+  }
+  .takeaways-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent-hover);
+    margin-bottom: 10px;
+  }
+  .takeaways ul {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .quickcheck {
+    background: var(--surface-2);
+  }
+  .quickcheck-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .quickcheck-question {
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .pager-btn {
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    border: 2px solid var(--accent);
+    background: var(--surface);
+    color: var(--accent-hover);
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .pager-btn:hover:not(:disabled) {
+    background: var(--accent);
+    color: white;
+  }
+  .pager-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .pager-progress {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+
+  @media (max-width: 720px) {
+    body { flex-direction: column; }
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: static;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 20px;
+    }
+    .nav-list { flex-direction: row; flex-wrap: wrap; }
+    .nav-btn { width: auto; }
+    .content { padding: 32px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <p class="brand">Inheritance in Java</p>
+  <p class="brand-sub">A Real-Life Scenario</p>
+  <ul class="nav-list" id="navList">
+    <li><button class="nav-btn" data-section="problem">1. The Problem</button></li>
+    <li><button class="nav-btn" data-section="solution">2. The Solution</button></li>
+    <li><button class="nav-btn" data-section="action">3. Inheritance in Action</button></li>
+  </ul>
+</nav>
+
+<main class="content">
+  <div class="content-inner">
+
+    <section class="lesson" id="problem" data-title="The Problem">
+      <div class="lesson-kicker">Lesson 1 of 3</div>
+      <h1>The Problem: Duplicate Attributes</h1>
+      <p>
+        Imagine a library system — like the one at Singapore Polytechnic — that serves two types of members:
+        <strong>students</strong> and <strong>staff</strong>. To keep track of these members in a Java program,
+        the most straightforward approach is to create one class for <code>Student</code> and a separate class
+        for <code>Staff</code>.
+      </p>
+      <p>
+        Each of these classes needs to store roughly the same information: a name, an ID, a department, and a
+        borrowing quota — along with a few methods to work with that data, such as setting the basic details or
+        reading back the quota.
+      </p>
+      <p>
+        Here's the problem: once you write both classes out, they end up looking almost identical. Most of their
+        attributes (<code>name</code>, <code>ID</code>, <code>department</code>, <code>quota</code>) and their
+        methods (<code>setBasics()</code>, <code>setQuota()</code>, <code>getQuota()</code>) are exactly the
+        same in both classes. Only a couple of details differ — students have a <code>studentClass</code>,
+        staff have a <code>designation</code>. Writing the same characteristics twice works, but it's repetitive,
+        and it gets harder to keep in sync as the program grows.
+      </p>
+      <div class="box takeaways">
+        <div class="takeaways-title">Key Takeaways</div>
+        <ul>
+          <li>Two related classes (<code>Student</code>, <code>Staff</code>) can end up sharing almost all of the
+            same attributes and methods.</li>
+          <li>Duplicating that shared code in each class works, but it's inefficient and risky to maintain.</li>
+          <li>Only a small part of each class is actually unique to it.</li>
+        </ul>
+      </div>
+      <div class="box quickcheck">
+        <div class="quickcheck-title">Quick Check</div>
+        <div class="quickcheck-question">
+          Before reading on — what would you do to avoid writing the same attributes and methods in both the
+          <code>Student</code> and <code>Staff</code> classes?
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="solution" data-title="The Solution">
+      <div class="lesson-kicker">Lesson 2 of 3</div>
+      <h1>The Solution: A Shared Superclass</h1>
+      <p>
+        Rather than repeating the same characteristics in both classes, we can pull everything <code>Student</code>
+        and <code>Staff</code> have in common out into one shared class, called a <strong>superclass</strong>
+        (also called a <strong>parent class</strong>).
+      </p>
+      <p>
+        In this example, that shared class is <code>Member</code>. It holds the attributes every member has in
+        common — <code>name</code>, <code>ID</code>, <code>department</code>, and <code>quota</code> — along with
+        the methods that work with them: <code>setBasics()</code>, <code>setQuota()</code>, and
+        <code>getQuota()</code>.
+      </p>
+      <p>
+        <code>Student</code> and <code>Staff</code> are then defined as <strong>subclasses</strong> (or
+        <strong>child classes</strong>) of <code>Member</code>. Each subclass only needs to add whatever makes it
+        different: <code>Student</code> adds a <code>studentClass</code> attribute, and <code>Staff</code> adds a
+        <code>designation</code> attribute. This relationship — a general superclass with more specific subclasses
+        branching off it — is what's called <strong>inheritance</strong> in object-oriented programming.
+      </p>
+      <div class="box takeaways">
+        <div class="takeaways-title">Key Takeaways</div>
+        <ul>
+          <li>A superclass (parent class) holds the attributes and methods that multiple classes share.</li>
+          <li>A subclass (child class) is built on top of a superclass and only defines what's unique to it.</li>
+          <li><code>Member</code> is the superclass here; <code>Student</code> and <code>Staff</code> are its
+            subclasses.</li>
+        </ul>
+      </div>
+      <div class="box quickcheck">
+        <div class="quickcheck-title">Quick Check</div>
+        <div class="quickcheck-question">
+          In this example, which class is the superclass, and which two classes are its subclasses?
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="action" data-title="Inheritance in Action">
+      <div class="lesson-kicker">Lesson 3 of 3</div>
+      <h1>Inheritance in Action</h1>
+      <p>
+        Once <code>Student</code> and <code>Staff</code> are defined as subclasses of <code>Member</code>,
+        something convenient happens automatically: they <strong>inherit</strong> every attribute and method
+        defined in <code>Member</code>, without needing to redeclare any of it.
+      </p>
+      <p>
+        That means a <code>Student</code> object automatically has a <code>name</code>, <code>ID</code>,
+        <code>department</code>, and <code>quota</code>, and can use <code>setBasics()</code>,
+        <code>setQuota()</code>, and <code>getQuota()</code> — even though none of that code was written directly
+        inside the <code>Student</code> class. The same is true for <code>Staff</code>.
+      </p>
+      <p>
+        On top of what they inherit, each subclass can still define its own unique characteristics:
+        <code>Student</code> keeps its own <code>studentClass</code> attribute, and <code>Staff</code> keeps its
+        own <code>designation</code> attribute. This is the payoff of the design — shared behavior is written
+        once, in the superclass, and reused everywhere it's needed, while each subclass stays free to add
+        whatever makes it distinct.
+      </p>
+      <div class="box takeaways">
+        <div class="takeaways-title">Key Takeaways</div>
+        <ul>
+          <li>Subclasses automatically inherit every attribute and method from their superclass.</li>
+          <li>Inherited characteristics don't need to be rewritten in the subclass.</li>
+          <li>Subclasses can still add their own unique attributes and methods alongside what they inherit.</li>
+        </ul>
+      </div>
+      <div class="box quickcheck">
+        <div class="quickcheck-title">Quick Check</div>
+        <div class="quickcheck-question">
+          If you added a new attribute to the <code>Member</code> class tomorrow, what would happen to the
+          <code>Student</code> and <code>Staff</code> classes, without changing their code at all?
+        </div>
+      </div>
+    </section>
+
+    <div class="pager">
+      <button class="pager-btn" id="prevBtn">← Previous</button>
+      <span class="pager-progress" id="progress"></span>
+      <button class="pager-btn" id="nextBtn">Next →</button>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  var sectionIds = ['problem', 'solution', 'action'];
+  var navButtons = document.querySelectorAll('.nav-btn');
+  var sections = sectionIds.map(function (id) { return document.getElementById(id); });
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var progressEl = document.getElementById('progress');
+
+  function currentIndexFromHash() {
+    var id = window.location.hash.replace('#', '');
+    var idx = sectionIds.indexOf(id);
+    return idx === -1 ? 0 : idx;
+  }
+
+  function showSection(index, options) {
+    options = options || {};
+    index = Math.max(0, Math.min(sectionIds.length - 1, index));
+
+    sections.forEach(function (section, i) {
+      section.classList.toggle('active', i === index);
+    });
+    navButtons.forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.section === sectionIds[index]);
+    });
+
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === sectionIds.length - 1;
+    progressEl.textContent = (index + 1) + ' / ' + sectionIds.length;
+
+    if (!options.skipHash) {
+      history.replaceState(null, '', '#' + sectionIds[index]);
+    }
+    if (!options.skipScroll) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  navButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      showSection(sectionIds.indexOf(btn.dataset.section));
+    });
+  });
+
+  prevBtn.addEventListener('click', function () {
+    showSection(sectionIds.indexOf(document.querySelector('.lesson.active').id) - 1);
+  });
+  nextBtn.addEventListener('click', function () {
+    showSection(sectionIds.indexOf(document.querySelector('.lesson.active').id) + 1);
+  });
+
+  window.addEventListener('hashchange', function () {
+    showSection(currentIndexFromHash(), { skipHash: true });
+  });
+
+  showSection(currentIndexFromHash(), { skipScroll: true });
+</script>
+
+</body>
+</html>

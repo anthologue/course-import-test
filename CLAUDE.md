@@ -16,7 +16,7 @@
 - **Content style**: Each slide becomes a lesson section written as normal prose (explanatory paragraphs), not a slide-by-slide bullet dump. No embedded slide images — slides are source material only.
 - **Section shape** (apply to every section): intro/explanation prose → "Key Takeaways" bullet box → one short ungraded self-check/reflection question.
 - **Audience**: Complete beginners. Plain language, define terms as they're introduced, avoid unexplained jargon.
-- **Navigation**: Single scrolling page with an anchor-link table of contents at the top (jump-to-section), not separate pages per lesson.
+- **Navigation**: One section visible at a time, switched via JavaScript (no separate HTML pages, no full reloads) — an on-page sidebar lists every section for direct jump-to, plus previous/next buttons to move sequentially. Section switch also updates the URL hash so a section can be linked/reloaded directly.
 - **Visual style**: "Playful Pastel" direction (chosen from 3 proposed options). Soft pastel palette — peach and teal duo-accent on a warm off-white background, rounded elements. Fonts: `Baloo 2` (rounded, weight 600-800) for headings, `Quicksand` for body text, both via Google Fonts. Avoid a cold/corporate look.
 - **Testing approach**: No automated tests (static content site). Verify by opening `index.html` in a browser and checking nav links jump to the right section and content reads well.
 - **Naming**: lowercase-hyphenated anchor IDs matching section topics (e.g. `#intro-to-x`), not `#slide-1` etc.
@@ -38,10 +38,10 @@
   ```
 - Output: ordered list of section objects, one per slide.
 
-### Phase 2 — Page structure
-- Build `index.html`: header/course title, top-of-page TOC (anchor links to each section), sections in slide order, each rendering the section data-model shape above.
-- Build `styles.css`: Playful Pastel theme (peach/teal accents on warm off-white, `Baloo 2`/`Quicksand` fonts, rounded cards for takeaways box, typography for beginner readability).
-- Add smooth-scroll / active-link highlighting in `script.js` if TOC needs it (optional — CSS anchor scroll may suffice).
+### Phase 2 — Page structure [done]
+- Built `index.html` (single file): sidebar nav listing every section, one section shown at a time (JS toggles visibility, no page reloads), previous/next controls, URL hash sync for direct linking.
+- Playful Pastel theme inlined (peach/teal accents on warm off-white, `Baloo 2`/`Quicksand` fonts, rounded cards for takeaways/quick-check boxes).
+- Sections built from the 3 slides shared (Java inheritance example — Member superclass / Student & Staff subclasses), reordered into problem → solution → outcome for a beginner-friendly narrative (slide order as shared was solution → outcome → problem).
 
 ### Phase 3 — Review & polish
 - Open in browser, verify: TOC links work, reading flow feels like a course (not a deck), takeaways/self-check present in every section, responsive on mobile width.
