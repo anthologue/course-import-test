@@ -3,11 +3,13 @@
 ## Stack & Conventions
 
 - **Stack**: Plain static site — HTML + CSS + vanilla JS. No build step, no framework, no dependencies.
-- **HARD CONSTRAINT — single file**: The entire project (every lesson section and the navigation between them) must live in one `index.html` file. All CSS goes in an inline `<style>` block and all JS in an inline `<script>` block within that same file — no external `.css`/`.js` files, no additional HTML pages. This is required so the finished project can be copy-pasted as a single file for sharing in class and on single-file code platforms. Never split content or code out into separate files.
-- **Delivery**: Committed as a single file in this repo (viewable locally, deployable via any static host / GitHub Pages).
+- **Single page, external CSS/JS allowed**: The entire project (every lesson section and the navigation between them) lives on one `index.html` page — no additional HTML pages. CSS and JS may live in external `styles.css` / `script.js` files (or be inlined) as convenient; external stylesheets and scripts are permitted.
+- **Delivery**: Committed as files in this repo (viewable locally, deployable via any static host / GitHub Pages).
 - **Folder structure**:
   ```
-  /index.html        single file: all lesson sections, nav, <style>, and <script> inlined
+  /index.html        single page: all lesson sections, nav
+  /styles.css         styling (if not inlined)
+  /script.js          smooth-scroll nav / active-section highlighting (if needed)
   /CLAUDE.md
   ```
 - **One-time build**: This is a fixed build from a specific, known set of 3-5 slides — not a feature for visitors to upload their own content. No upload UI, no backend.
@@ -37,9 +39,9 @@
 - Output: ordered list of section objects, one per slide.
 
 ### Phase 2 — Page structure
-- Build `index.html` as a single file: header/course title, top-of-page TOC (anchor links to each section), sections in slide order, each rendering the section data-model shape above.
-- Inline all styling in a `<style>` block in the `<head>`: warm/friendly theme (palette, rounded cards for takeaways box, typography for beginner readability).
-- Inline any smooth-scroll / active-link highlighting in a `<script>` block if TOC needs it (optional — CSS anchor scroll may suffice).
+- Build `index.html`: header/course title, top-of-page TOC (anchor links to each section), sections in slide order, each rendering the section data-model shape above.
+- Build `styles.css`: warm/friendly theme (palette, rounded cards for takeaways box, typography for beginner readability).
+- Add smooth-scroll / active-link highlighting in `script.js` if TOC needs it (optional — CSS anchor scroll may suffice).
 
 ### Phase 3 — Review & polish
 - Open in browser, verify: TOC links work, reading flow feels like a course (not a deck), takeaways/self-check present in every section, responsive on mobile width.
