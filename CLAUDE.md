@@ -14,7 +14,7 @@
   ```
 - **One-time build**: This is a fixed build from a specific, known set of 3-5 slides — not a feature for visitors to upload their own content. No upload UI, no backend.
 - **Content style**: Each slide becomes a lesson section written as normal prose (explanatory paragraphs), not a slide-by-slide bullet dump. No embedded slide images — slides are source material only.
-- **Section shape** (apply to every section): intro/explanation prose → "Key Takeaways" bullet box → one short ungraded self-check/reflection question.
+- **Section shape** (apply to every lesson section built from a slide): intro/explanation prose → "Key Takeaways" bullet box → one short ungraded self-check/reflection question → one graded check-in question (multiple-choice or short-answer) testing that section's key idea, with immediate right/wrong feedback shown inline (never a separate quiz screen) and no gating — the student can move to the next section regardless of the answer.
 - **Audience**: Complete beginners. Plain language, define terms as they're introduced, avoid unexplained jargon.
 - **Navigation**: One section visible at a time, switched via JavaScript (no separate HTML pages, no full reloads) — an on-page sidebar lists every section for direct jump-to, plus previous/next buttons to move sequentially. Section switch also updates the URL hash so a section can be linked/reloaded directly.
 - **Visual style**: "Playful Pastel" direction (chosen from 3 proposed options). Soft pastel palette — peach and teal duo-accent on a warm off-white background, rounded elements. Fonts: `Baloo 2` (rounded, weight 600-800) for headings, `Quicksand` for body text, both via Google Fonts. Avoid a cold/corporate look.
@@ -43,8 +43,13 @@
 - Playful Pastel theme inlined (peach/teal accents on warm off-white, `Baloo 2`/`Quicksand` fonts, rounded cards for takeaways/quick-check boxes).
 - Sections built from the 3 slides shared (Java inheritance example — Member superclass / Student & Staff subclasses), reordered into problem → solution → outcome for a beginner-friendly narrative (slide order as shared was solution → outcome → problem).
 
+### Phase 2.5 — Practice & assessment [done]
+- Added a graded check-in question (MC or short-answer) after each lesson's takeaways/self-check, with inline right/wrong feedback; answering never blocks moving to the next section.
+- Added a 4th section, "Try It Yourself": an interactive simulator where adding an attribute to the `Member` superclass card live-updates both the `Student` and `Staff` subclass cards, demonstrating inheritance experientially.
+- Added a 5th section, a 3-question final quiz recapping all three lessons, graded inline per question with a running score.
+
 ### Phase 3 — Review & polish
-- Open in browser, verify: TOC links work, reading flow feels like a course (not a deck), takeaways/self-check present in every section, responsive on mobile width.
+- Open in browser, verify: nav/sidebar links work, reading flow feels like a course (not a deck), takeaways/self-check/check-in present in every lesson section, simulator and quiz behave correctly, responsive on mobile width.
 - Incorporate user feedback on tone/content per section.
 
 ### Phase 4 — Finalize
